@@ -6,6 +6,7 @@
   --color-fabric-cream: #f9f7f2;
   --color-fabric-gold: #c5a059;
   --color-fabric-dark: #1a1a1a;
+  --font-heading: var(--font-heading), cursive, sans-serif;
 
   /* Animation: Breathe (Subtle pulsing) */
   --animate-breathe: breathe 4s ease-in-out infinite;

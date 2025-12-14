@@ -1,39 +1,79 @@
+import Image from 'next/image'; // Import Image component
 import { fabrics } from '@/lib/fabrics';
 import FabricCard from '@/components/FabricCard';
+import { threadTaraFont } from '@/lib/font';
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      {/* Navbar */}
-      <nav className="flex items-center justify-between px-8 py-6">
-        {/* Updated to use your new script font */}
-        <div className="text-4xl font-heading font-bold text-fabric-dark">
-          Thread Tara
+      {/* Navbar - Kept clean to contrast with the rich hero below */}
+<nav className="flex items-center justify-end px-8 py-6 z-50 absolute top-0 w-full bg-transparent">
+  
+    {/* Thread Tara title removed */}
+    
+    {/* Contact Button remains on the right side */}
+    <a href="#contact" className="rounded-full border-2 border-fabric-cream px-6 py-2 text-sm font-bold text-fabric-cream transition hover:bg-fabric-gold hover:text-fabric-dark hover:border-fabric-gold shadow-lg">
+        Contact Shop
+    </a>
+</nav>
+
+      {/* =========================================
+          NEW FANCY HERO SECTION
+      ========================================= */}
+      <section className="relative flex h-[85vh] items-center justify-center overflow-hidden">
+        
+        {/* 1. Background Image with rich Indian texture */}
+        {/* IMPORTANT: Replace src below with your own high-quality fabric image */}
+        <div className="absolute inset-0">
+          <Image 
+            src="/bg.jpg" 
+            alt="Rich Indian Silk Background"
+            fill
+            className="object-cover animate-pan" // Added slow pan animation for dynamism
+            priority // Loads this image first
+          />
+          {/* Dark/Gold gradient overlay for luxurious feel and readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-fabric-dark/80 to-black/90" />
+          {/* Optional subtle pattern overlay */}
+          <div className="absolute inset-0 bg-[url('/pattern-overlay.png')] opacity-10 mix-blend-overlay"></div>
         </div>
-        <a href="#contact" className="rounded-full border border-fabric-dark px-6 py-2 transition hover:bg-fabric-dark hover:text-white">
-          Contact Shop
-        </a>
-      </nav>
 
-      {/* Hero Section */}
-      <section className="px-6 py-20 text-center md:py-32">
-        <h1 className="mb-6 animate-breathe font-serif text-5xl text-fabric-dark md:text-7xl">
-          Premium Textiles <br /> For Every Vision
-        </h1>
-        <p className="mx-auto max-w-2xl text-lg text-gray-600">
-          Explore our curated collection of silks, linens, and velvets. 
-          Visit our showroom to feel the difference.
-        </p>
+        {/* 2. Hero Content */}
+        <div className="relative z-10 px-6 text-center">
+          {/* Small pre-title */}
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-fabric-gold/90">
+            The Essence of Tradition
+          </p>
+          
+          {/* Main fancy title using the script font */}
+          <h1 className="mb-6 animate-breathe font-heading text-7xl text-fabric-cream md:text-9xl drop-shadow-2xl">
+            Thread Tara
+          </h1>
+          
+          {/* Subtitle */}
+          <h2 className="mb-8 font-serif text-3xl text-white md:text-5xl font-light leading-tight">
+            Premium Textiles For <br /> Every Vision
+          </h2>
+          
+          <div className="mx-auto h-1 w-24 bg-fabric-gold mb-8 rounded-full"></div>
+
+          <p className="mx-auto max-w-2xl text-lg text-gray-200 leading-relaxed">
+            Explore our curated collection of exquisite silks, artisanal linens, and royal velvets. 
+            Visit our showroom to experience the touch of luxury.
+          </p>
+        </div>
       </section>
+      {/* =========================================
+          END NEW HERO SECTION
+      ========================================= */}
 
-      {/* --- RESTORED: Product Showcase Section --- */}
-      <section className="bg-white px-6 py-20">
+
+      {/* Product Showcase Section */}
+      <section className="bg-fabric-cream/30 px-6 py-24">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-12 flex items-end justify-between">
-            <h2 className="text-3xl font-light text-gray-800">Our Collection</h2>
-            <span className="hidden text-sm italic text-gray-400 md:block">
-              {fabrics.length} premium fabrics available
-            </span>
+          <div className="mb-16 text-center">
+             <h2 className="font-heading text-5xl text-fabric-dark mb-4">Our Collection</h2>
+             <p className="text-gray-600 font-serif text-xl max-w-2xl mx-auto">Handpicked fabrics defining elegance and heritage.</p>
           </div>
           
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -44,13 +84,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Contact Section (Footer) */}
-      <section id="contact" className="bg-fabric-dark px-6 py-24 text-fabric-cream">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
+      {/* Contact Section (Footer) - Your rearranged version intact */}
+      <section id="contact" className="bg-fabric-dark px-6 py-24 text-fabric-cream relative overflow-hidden">
+        {/* Added a subtle background graphic to the footer too for consistency */}
+         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+         
+        <div className="mx-auto max-w-7xl relative z-10">
+          <div className="grid grid-cols-1 gap-12 md:grid-cols-3 text-center md:text-left">
             
             {/* Column 1: Brand Identity */}
-            <div className="flex flex-col items-center text-center md:items-start md:text-left">
+            <div className="flex flex-col items-center md:items-start">
               <h2 className="mb-2 font-heading text-5xl text-fabric-gold">
                 Thread Tara
               </h2>
@@ -65,7 +108,7 @@ export default function Home() {
             </div>
 
             {/* Column 2: Location (Address) */}
-            <div className="flex flex-col items-center text-center md:items-start md:text-left">
+            <div className="flex flex-col items-center md:items-start">
               <h3 className="mb-6 text-lg font-bold uppercase tracking-wider text-fabric-gold">
                 Visit Our Showroom
               </h3>
@@ -87,7 +130,7 @@ export default function Home() {
             </div>
 
             {/* Column 3: Contact Details */}
-            <div className="flex flex-col items-center text-center md:items-start md:text-left">
+            <div className="flex flex-col items-center md:items-start">
               <h3 className="mb-6 text-lg font-bold uppercase tracking-wider text-fabric-gold">
                 Contact Us
               </h3>
@@ -115,7 +158,7 @@ export default function Home() {
         </div>
       </section>
           {/* Footer Bottom */}
-          <div className="py-5 border-t bg-fabric-dark border-white/10 text-center text-[14px] text-gray-200">
+          <div className="py-6 bg-[#111] text-center text-[13px] text-gray-400 tracking-wider">
             <p>© {new Date().getFullYear()} Thread Tara. All rights reserved.</p>
           </div>
         
