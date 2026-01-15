@@ -17,13 +17,7 @@ export default function Home() {
     </a>
 </nav>
 
-      {/* =========================================
-          NEW FANCY HERO SECTION
-      ========================================= */}
       <section className="relative flex h-[85vh] items-center justify-center overflow-hidden">
-        
-        {/* 1. Background Image with rich Indian texture */}
-        {/* IMPORTANT: Replace src below with your own high-quality fabric image */}
         <div className="absolute inset-0">
           <Image 
             src="/bg.jpg" 
@@ -33,9 +27,9 @@ export default function Home() {
             priority // Loads this image first
           />
           {/* Dark/Gold gradient overlay for luxurious feel and readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-fabric-dark/80 to-black/90" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-fabric-dark/70 to-black/80" />
           {/* Optional subtle pattern overlay */}
-          <div className="absolute inset-0 bg-[url('/pattern-overlay.png')] opacity-10 mix-blend-overlay"></div>
+
         </div>
 
         {/* 2. Hero Content */}
@@ -63,12 +57,7 @@ export default function Home() {
           </p>
         </div>
       </section>
-      {/* =========================================
-          END NEW HERO SECTION
-      ========================================= */}
 
-
-      {/* Product Showcase Section */}
       <section className="bg-fabric-cream/30 px-6 py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-16 text-center">
@@ -83,16 +72,10 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Contact Section (Footer) - Your rearranged version intact */}
       <section id="contact" className="bg-fabric-dark px-6 py-24 text-fabric-cream relative overflow-hidden">
-        {/* Added a subtle background graphic to the footer too for consistency */}
          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-         
         <div className="mx-auto max-w-7xl relative z-10">
           <div className="grid grid-cols-1 gap-12 md:grid-cols-3 text-center md:text-left">
-            
-            {/* Column 1: Brand Identity */}
             <div className="flex flex-col items-center md:items-start">
               <h2 className="mb-2 font-heading text-5xl text-fabric-gold">
                 Thread Tara
@@ -106,8 +89,6 @@ export default function Home() {
                 <p>Mens • Women • Kids</p>
               </div>
             </div>
-
-            {/* Column 2: Location (Address) */}
             <div className="flex flex-col items-center md:items-start">
               <h3 className="mb-6 text-lg font-bold uppercase tracking-wider text-fabric-gold">
                 Visit Our Showroom
@@ -128,8 +109,6 @@ export default function Home() {
                 Get Directions →
               </a>
             </div>
-
-            {/* Column 3: Contact Details */}
             <div className="flex flex-col items-center md:items-start">
               <h3 className="mb-6 text-lg font-bold uppercase tracking-wider text-fabric-gold">
                 Contact Us
@@ -157,7 +136,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-          {/* Footer Bottom */}
           <div className="py-6 bg-[#111] text-center text-[13px] text-gray-400 tracking-wider">
             <p>© {new Date().getFullYear()} Thread Tara. All rights reserved.</p>
           </div>

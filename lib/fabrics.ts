@@ -2,37 +2,32 @@ export interface Fabric {
   id: string;
   name: string;
   category: string;
-  image: string; // URL placeholder
+  image: string; 
   description: string;
 }
 
 export const fabrics: Fabric[] = [
   {
     id: '1',
-    name: 'Royal Silk Velvet',
-    category: 'Silk',
-    image: '/model1.jpg',
-    description: 'Luxurious deep red velvet perfect for evening gowns.',
+    name: 'Brocade Fabrics',
+    category: 'Brocade',
+    image: '/brocade/brocade.webp', // Look in public/brocade.jpg
+    description: 'A luxurious, heavy-weight fabric featuring intricate, raised patterns woven directly into the cloth for a three-dimensional, embossed effect.',
   },
   {
     id: '2',
-    name: 'Organic Linen Weave',
-    category: 'Linen',
-    image: '/model2.jpg',
-    description: 'Breathable, natural linen in earthy beige tones.',
+    name: 'Embroidery Fabrics',
+    category: 'Embroidery',
+    image: '/embroidery/embroidery.webp', // Look in public/embroidery.jpg
+    description: 'Fine embroidery featuring heavy needlework for bridal and festive wear.',
   },
   {
     id: '3',
-    name: 'Damask Gold Pattern',
-    category: 'Upholstery',
-    image: '/model3.jpg',
-    description: 'Intricate golden patterns for high-end furniture.',
+    name: 'Plain Fabrics',
+    category: 'Plain',
+    image: '/plain/plain.webp', // Look in public/plain.jpg
+    description: 'High-quality, solid-colored fabrics with a soft fall and matte finish.',
   },
-  {
-    id: '4',
-    name: 'Midnight Blue Satin',
-    category: 'Satin',
-    image: '/model4.jpg',
-    description: 'Smooth, glossy finish for premium drapery.',
-  },
+
+
 ];
