@@ -22,8 +22,10 @@ export default function FabricDetailPage({
 
   const fabric = fabrics.find((f) => String(f.id) === String(id));
 
-  // Get images from manifest based on category, fallback to empty array
-  const images = fabric ? manifest[fabric.category] || [] : [];
+  // Fix: Lowercase the category name to match the manifest keys
+  const images = fabric ? (manifest[fabric.category.toLowerCase()] || []) : [];
+
+
 
   // Close modal on 'Esc' key
   useEffect(() => {
@@ -41,8 +43,6 @@ export default function FabricDetailPage({
       </div>
     );
 
-  console.log("Current Fabric Category:", fabric?.category);
-  console.log("Images found for this category:", images);
   return (
     <div className="min-h-screen bg-[#fafafa] text-[#1a1a1a] selection:bg-amber-100">
       {/* Lightbox Modal */}

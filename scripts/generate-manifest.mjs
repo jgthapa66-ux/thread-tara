@@ -12,19 +12,20 @@ try {
     const itemPath = path.join(PUBLIC_DIR, item);
     
     // Only process if it's a directory (e.g., /public/silk)
-    if (fs.statSync(itemPath).isDirectory()) {
-      const files = fs.readdirSync(itemPath);
-      
-      const images = files
-        .filter(file => /\.(jpg|jpeg|png|webp|avif)$/i.test(file))
-        .map(file => `/${item}/${file}`.replace(/\/+/g, '/'))
-        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+  // Inside your items.forEach loop in the script
+if (fs.statSync(itemPath).isDirectory()) {
+  const files = fs.readdirSync(itemPath);
+  
+  const images = files
+    .filter(file => /\.(jpg|jpeg|png|webp|avif)$/i.test(file))
+    .map(file => `/${item}/${file}`)
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 
-      // Only add to manifest if the folder actually contains images
-      if (images.length > 0) {
-        manifest[item] = images;
-      }
-    }
+  if (images.length > 0) {
+    // FORCE LOWERCASE KEY HERE
+    manifest[item.toLowerCase()] = images;
+  }
+}
   });
 
   const libDir = path.join(process.cwd(), 'lib');
