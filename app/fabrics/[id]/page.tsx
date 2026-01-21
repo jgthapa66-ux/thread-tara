@@ -1,48 +1,48 @@
 "use client";
-import React, { use, useEffect, useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
-import { fabrics } from '@/lib/fabrics';
+import React, { use, useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { fabrics } from "@/lib/fabrics";
+// Import the generated manifest
+import imageManifest from "@/lib/image-manifest.json";
 
-export default function FabricDetailPage({ params }: { params: Promise<{ id: string }> }) {
+// Type safety for the manifest
+const manifest = imageManifest as Record<string, string[]>;
+
+export default function FabricDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const resolvedParams = use(params);
   const id = resolvedParams.id;
 
-  const [images, setImages] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const fabric = fabrics.find((f) => String(f.id) === String(id));
 
-  useEffect(() => {
-    async function fetchImages() {
-      if (!fabric) return;
-      setLoading(true);
-      try {
-        const response = await fetch(`/api/fabric-images/${fabric.category}`);
-        const data = await response.json();
-        if (Array.isArray(data)) setImages(data);
-      } catch (err) {
-        console.error("Could not load image list", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchImages();
-  }, [fabric]);
+  // Get images from manifest based on category, fallback to empty array
+  const images = fabric ? manifest[fabric.category] || [] : [];
 
   // Close modal on 'Esc' key
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSelectedImage(null);
+      if (e.key === "Escape") setSelectedImage(null);
     };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
-  if (!fabric) return <div className="p-20 text-center font-serif italic text-gray-400">Fabric not found.</div>;
+  if (!fabric)
+    return (
+      <div className="p-20 text-center font-serif italic text-gray-400">
+        Fabric not found.
+      </div>
+    );
 
+  console.log("Current Fabric Category:", fabric?.category);
+  console.log("Images found for this category:", images);
   return (
     <div className="min-h-screen bg-[#fafafa] text-[#1a1a1a] selection:bg-amber-100">
       {/* Lightbox Modal */}
@@ -70,7 +70,7 @@ export default function FabricDetailPage({ params }: { params: Promise<{ id: str
                 priority
               />
             </motion.div>
-            <button 
+            <button
               className="absolute top-8 right-8 text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-black transition-colors"
               onClick={() => setSelectedImage(null)}
             >
@@ -81,8 +81,14 @@ export default function FabricDetailPage({ params }: { params: Promise<{ id: str
       </AnimatePresence>
 
       <nav className="sticky top-0 z-50 flex items-center justify-between px-8 py-6 mix-blend-difference">
-        <Link href="/" className="group flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-black transition-all">
-          <span className="transition-transform group-hover:-translate-x-1">←</span> Back to Collection
+        <Link
+          href="/"
+          className="group flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-black transition-all"
+        >
+          <span className="transition-transform group-hover:-translate-x-1">
+            ←
+          </span>{" "}
+          Back to Collection
         </Link>
         <div className="hidden md:block text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">
           Selected Works / {fabric.category}
@@ -106,7 +112,7 @@ export default function FabricDetailPage({ params }: { params: Promise<{ id: str
             </motion.div>
           </div>
           <div className="lg:col-span-4 lg:pb-4">
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 1 }}
@@ -119,15 +125,10 @@ export default function FabricDetailPage({ params }: { params: Promise<{ id: str
       </header>
 
       <main className="mx-auto max-w-[1400px] px-8 pb-32">
-        {loading ? (
-          <div className="flex h-96 items-center justify-center">
-            <motion.div 
-              animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="font-serif italic text-gray-400"
-            >
-              Curating gallery...
-            </motion.div>
+        {/* Images are now handled instantly without a loading state */}
+        {images.length === 0 ? (
+          <div className="text-center py-20 text-gray-400 font-serif italic">
+            No images found in this collection.
           </div>
         ) : (
           <div className="columns-1 gap-8 sm:columns-2 lg:columns-3 space-y-8">
@@ -137,10 +138,10 @@ export default function FabricDetailPage({ params }: { params: Promise<{ id: str
                   key={src}
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ 
-                    duration: 0.8, 
-                    delay: index * 0.1,
-                    ease: [0.215, 0.61, 0.355, 1] 
+                  transition={{
+                    duration: 0.8,
+                    delay: index * 0.05,
+                    ease: [0.215, 0.61, 0.355, 1],
                   }}
                   onClick={() => setSelectedImage(src)}
                   className="group relative break-inside-avoid overflow-hidden bg-white cursor-zoom-in"
@@ -155,10 +156,10 @@ export default function FabricDetailPage({ params }: { params: Promise<{ id: str
                     />
                     <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/5" />
                   </div>
-                  
+
                   <div className="mt-4 flex justify-between items-baseline px-1">
                     <span className="text-[9px] font-bold uppercase tracking-widest text-gray-400">
-                      Plate {(index + 1).toString().padStart(2, '0')}
+                      Plate {(index + 1).toString().padStart(2, "0")}
                     </span>
                     <div className="h-px flex-grow mx-4 bg-gray-100" />
                     <span className="text-[9px] font-medium uppercase text-gray-300 italic font-serif">
@@ -173,13 +174,18 @@ export default function FabricDetailPage({ params }: { params: Promise<{ id: str
       </main>
 
       <footer className="border-t border-gray-100 py-24 text-center">
-        <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-gray-400 mb-8">Inquire about this textile</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-gray-400 mb-8">
+          Inquire about this textile
+        </p>
         <button className="px-12 py-4 bg-gray-950 text-white text-xs font-bold uppercase tracking-widest hover:bg-amber-800 transition-colors duration-500">
           Contact Concierge
         </button>
       </footer>
-      <section id="contact" className="bg-fabric-dark px-6 py-24 text-fabric-cream relative overflow-hidden">
-         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+      <section
+        id="contact"
+        className="bg-fabric-dark px-6 py-24 text-fabric-cream relative overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
         <div className="mx-auto max-w-7xl relative z-10">
           <div className="grid grid-cols-1 gap-12 md:grid-cols-3 text-center md:text-left">
             <div className="flex flex-col items-center md:items-start">
@@ -189,7 +195,7 @@ export default function FabricDetailPage({ params }: { params: Promise<{ id: str
               <p className="mb-6 text-sm font-light tracking-[0.2em] uppercase text-white/80">
                 Be Your Own Designer
               </p>
-              
+
               <div className="space-y-1 text-sm font-medium text-gray-400">
                 <p>Fabrics • Apparels • Accessories</p>
                 <p>Mens • Women • Kids</p>
@@ -203,11 +209,13 @@ export default function FabricDetailPage({ params }: { params: Promise<{ id: str
                 <p>A-20 Lajpat Nagar Part-II</p>
                 <p>Opposite Lajpat Nagar Metro Station</p>
                 <p>Gate No.2</p>
-                <p className="mt-2 font-semibold text-white">New Delhi - 110024</p>
+                <p className="mt-2 font-semibold text-white">
+                  New Delhi - 110024
+                </p>
               </address>
-              
-              <a 
-                href="https://www.google.com/maps/search/?api=1&query=A-20+Lajpat+Nagar+Part-II+New+Delhi" 
+
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=A-20+Lajpat+Nagar+Part-II+New+Delhi"
                 target="_blank"
                 rel="noreferrer"
                 className="mt-6 inline-block border-b border-fabric-gold pb-0.5 text-sm text-fabric-gold transition hover:text-white hover:border-white"
@@ -219,21 +227,34 @@ export default function FabricDetailPage({ params }: { params: Promise<{ id: str
               <h3 className="mb-6 text-lg font-bold uppercase tracking-wider text-fabric-gold">
                 Contact Us
               </h3>
-              
+
               <div className="space-y-6">
                 <div>
-                  <p className="mb-1 text-xs text-gray-500 uppercase">Phone / WhatsApp</p>
-                  <a href="tel:+918750503536" className="block text-lg transition hover:text-fabric-gold">
+                  <p className="mb-1 text-xs text-gray-500 uppercase">
+                    Phone / WhatsApp
+                  </p>
+                  <a
+                    href="tel:+918750503536"
+                    className="block text-lg transition hover:text-fabric-gold"
+                  >
                     +91 8750503536
                   </a>
-                  <a href="tel:+919999056556" className="block text-lg transition hover:text-fabric-gold">
+                  <a
+                    href="tel:+919999056556"
+                    className="block text-lg transition hover:text-fabric-gold"
+                  >
                     +91 9999056556
                   </a>
                 </div>
 
                 <div>
-                  <p className="mb-1 text-xs text-gray-500 uppercase">Email Inquiry</p>
-                  <a href="mailto:threadtara2025@gmail.com" className="text-lg transition hover:text-fabric-gold">
+                  <p className="mb-1 text-xs text-gray-500 uppercase">
+                    Email Inquiry
+                  </p>
+                  <a
+                    href="mailto:threadtara2025@gmail.com"
+                    className="text-lg transition hover:text-fabric-gold"
+                  >
                     threadtara2025@gmail.com
                   </a>
                 </div>
@@ -242,9 +263,9 @@ export default function FabricDetailPage({ params }: { params: Promise<{ id: str
           </div>
         </div>
       </section>
-          <div className="py-6 bg-[#111] text-center text-[13px] text-gray-400 tracking-wider">
-            <p>© {new Date().getFullYear()} Thread Tara. All rights reserved.</p>
-          </div>
+      <div className="py-6 bg-[#111] text-center text-[13px] text-gray-400 tracking-wider">
+        <p>© {new Date().getFullYear()} Thread Tara. All rights reserved.</p>
+      </div>
     </div>
   );
 }
