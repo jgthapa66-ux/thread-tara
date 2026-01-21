@@ -23,9 +23,7 @@ export default function FabricDetailPage({
   const fabric = fabrics.find((f) => String(f.id) === String(id));
 
   // Fix: Lowercase the category name to match the manifest keys
-  const images = fabric ? (manifest[fabric.category.toLowerCase()] || []) : [];
-
-
+  const images = fabric ? manifest[fabric.category.toLowerCase()] || [] : [];
 
   // Close modal on 'Esc' key
   useEffect(() => {
@@ -83,14 +81,16 @@ export default function FabricDetailPage({
       <nav className="sticky top-0 z-50 flex items-center justify-between px-8 py-6 mix-blend-difference">
         <Link
           href="/"
-          className="group flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-black transition-all"
+          /* Changed text-gray-500 to text-white and removed hover:text-black */
+          className="group flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-white transition-all"
         >
           <span className="transition-transform group-hover:-translate-x-1">
             ←
           </span>{" "}
           Back to Collection
         </Link>
-        <div className="hidden md:block text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">
+
+        <div className="hidden md:block text-[10px] font-bold uppercase tracking-[0.3em] text-white">
           Selected Works / {fabric.category}
         </div>
       </nav>
@@ -177,9 +177,14 @@ export default function FabricDetailPage({
         <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-gray-400 mb-8">
           Inquire about this textile
         </p>
-        <button className="px-12 py-4 bg-gray-950 text-white text-xs font-bold uppercase tracking-widest hover:bg-amber-800 transition-colors duration-500">
-          Contact Concierge
-        </button>
+        <a
+          href="https://wa.me/918750503536?text=Hello%20Thread%20Tara,%20I%20am%20interested%20in%20learning%20more%20about%20your%20textiles."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block px-12 py-4 bg-gray-950 text-white text-xs font-bold uppercase tracking-widest hover:bg-green-700 transition-colors duration-500"
+        >
+          Whatsapp Us
+        </a>
       </footer>
       <section
         id="contact"
