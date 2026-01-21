@@ -40,7 +40,8 @@ export default function Home() {
         <ThreadOverlay />
 
         {/* The Magic Stars Component */}
-        <SparkleCanvas containerRef={textRef} />
+        {/* Cast the ref to the expected type */}
+      <SparkleCanvas containerRef={textRef as React.RefObject<HTMLHeadingElement>} />
 
         {/* 2. Hero Content */}
         <div className="relative z-10 px-6 text-center">
