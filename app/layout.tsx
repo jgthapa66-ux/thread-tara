@@ -4,7 +4,7 @@ import "./globals.css";
 import { threadTaraFont } from "@/lib/font";
 import ThreadWave from "@/components/ThreadWave";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-
+import { Analytics } from "@vercel/analytics/next";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -33,6 +33,7 @@ export default function RootLayout({
         <ThreadWave />
         {children}
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
