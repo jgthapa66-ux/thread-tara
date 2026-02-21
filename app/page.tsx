@@ -2,7 +2,7 @@
 import Image from "next/image"; // Import Image component
 import { fabrics } from "@/lib/fabrics";
 import FabricCard from "@/components/FabricCard";
-import { threadTaraFont } from "@/lib/font";
+
 import { useRef } from "react";
 import SparkleCanvas from "@/components/SparkleCanvas";
 
