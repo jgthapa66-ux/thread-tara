@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { threadTaraFont } from "@/lib/font";
 import ThreadWave from "@/components/ThreadWave";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
       >
         <ThreadWave />
         {children}
+        <Analytics />
       </body>
     </html>
   );
