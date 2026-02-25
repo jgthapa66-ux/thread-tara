@@ -8,6 +8,15 @@
     50% { transform: translateX(15px) rotate(0.5deg); opacity: 0.6; }
   }
 }
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
 @theme {
   --animate-gold-sweep: gold-sweep 3s ease-in-out infinite alternate;
 
